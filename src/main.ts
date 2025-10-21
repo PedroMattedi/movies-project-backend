@@ -6,7 +6,11 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors();
+  // app.enableCors({
+  //   origin: ['http://localhost:5173', 'https://seufront.com'],
+  //   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  //   allowedHeaders: 'Content-Type, Authorization',
+  // });
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -28,17 +32,13 @@ async function bootstrap() {
     .addTag('Upload', 'Upload de imagens para AWS S3')
     .build();
 
-  app.enableCors({
-    origin: ['http://localhost:5173', 'https://seufront.com'],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type, Authorization',
-  });
-
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
 
-  await app.listen(5000, '0.0.0.0');
-  console.log('🚀 Application is running on: http://0.0.0.0:5000');
-  console.log('📚 Swagger documentation: http://0.0.0.0:5000/api/docs');
+  const port = process.env.PORT || 5000;
+  await app.listen(port, '0.0.0.0');
+
+  console.log(`🚀 Application is running on: http://localhost:${port}`);
+  console.log(`📚 Swagger documentation: http://localhost:${port}/api/docs`);
 }
 bootstrap();
