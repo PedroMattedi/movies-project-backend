@@ -1,5 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, IsDateString, IsNumber, IsOptional, Min } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsDateString,
+  IsNumber,
+  IsOptional,
+  Min,
+} from 'class-validator';
 
 export class CreateMovieDto {
   @ApiProperty({ example: 'The Matrix' })
@@ -16,7 +23,9 @@ export class CreateMovieDto {
   @IsDateString()
   releaseDate: string;
 
-  @ApiProperty({ example: 'A computer hacker learns about the true nature of reality...' })
+  @ApiProperty({
+    example: 'A computer hacker learns about the true nature of reality...',
+  })
   @IsNotEmpty()
   @IsString()
   description: string;

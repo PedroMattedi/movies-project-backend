@@ -18,13 +18,21 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Movie API')
-    .setDescription('API completa para gerenciamento de filmes com autenticação JWT')
+    .setDescription(
+      'API completa para gerenciamento de filmes com autenticação JWT',
+    )
     .setVersion('1.0')
     .addBearerAuth()
     .addTag('Authentication', 'Endpoints de autenticação e registro')
     .addTag('Movies', 'CRUD completo de filmes com filtros e paginação')
     .addTag('Upload', 'Upload de imagens para AWS S3')
     .build();
+
+  app.enableCors({
+    origin: ['http://localhost:5173', 'https://seufront.com'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
+  });
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
